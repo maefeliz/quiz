@@ -136,7 +136,7 @@
 <body>
 
 <div class="container" id="quiz-container">
-  <h1 class="fade-in">Descubra Como Melhorar Seu Jogo de Free Fire!</h1>
+  <h1 class="fade-in">Descubra Como Melhorar Sua Sensi No Free Fire!</h1>
   
   <div class="question fade-in" id="question">Vamos começar! Você costuma acertar tiros na cabeça?</div>
   
@@ -171,18 +171,18 @@
       ]
     },
     {
-      question: "Você usa mira ou preferencia tiros livres?",
+      question: "Você usa mira ou preferencia tiro de mira Aberta?",
       options: [
         { text: "Uso mira, é mais preciso.", answer: "mira" },
-        { text: "Prefiro tiros livres.", answer: "livre" },
+        { text: "Prefiro atirar de mira aberta.", answer: "livre" },
         { text: "Uso ambos, dependendo da situação.", answer: "ambos" }
       ]
     },
     {
-      question: "Você já tentou melhorar seu desempenho com acessórios ou treinos?",
+      question: "Você já tentou melhorar sua sensi com auxilos ou treinos?",
       options: [
         { text: "Sim, várias vezes.", answer: "sim" },
-        { text: "Não, não sei por onde começar.", answer: "não" },
+        { text: "Não, Nunca usei nada.", answer: "não" },
         { text: "Já tentei, mas sem sucesso.", answer: "tentativas" }
       ]
     }
@@ -236,15 +236,15 @@
     const totalSometimes = responses.filter(r => r === 'às vezes').length;
 
     if (totalYes >= 2) {
-      resultTitle.innerText = "Você já tem potencial, só precisa de um empurrão!";
-      solucaoDiv.innerHTML = "Que tal usar o <strong>Botão Vermelho</strong> para acertar mais tiros na cabeça rapidamente, sem precisar usar mira? Assim, você domina o jogo!";
+      resultTitle.innerText = "Você já tem potencial, só precisa de um empurrãozinho!";
+      solucaoDiv.innerHTML = "Que tal usar o <strong>Botão Vermelho</strong> para acertar mais tiros na cabeça, Garanto sua Mirar vai ficar igual chiclete na cabeça dos inimigos,você domina o jogo!";
     } else if (totalNo >= 2) {
-      resultTitle.innerText = "Vamos melhorar seu desempenho!";
-      solucaoDiv.innerHTML = "O <strong>Botão Vermelho</strong> ajuda você a dar mais tiros na cabeça sem precisar de mira, facilitando suas jogadas e deixando seus inimigos sem chance!";
+      resultTitle.innerText = "Vamos melhorar sua sensi agora!";
+      solucaoDiv.innerHTML = "O <strong>Botão Vermelho</strong> ajuda você a Full vermelho na cabeça sem pinar um tiror!, Nosso Painel vai deixa você um xitado deixando seus inimigos no chinelo!";
     } else {
       resultTitle.innerText = "Você está no caminho certo!";
-      solucaoDiv.innerHTML = "Com o <strong>Botão Vermelho</strong>, suas chances de acertar tiros na cabeça aumentam ainda mais, deixando seus inimigos de cabelo em pé!";
-    }
+      solucaoDiv.innerHTML = "Com o <strong>Botão Vermelho</strong>, com Painel seus tiros na cabeça aumentam 100%, sem dar nenhuma chance, deixando seus inimigos de boca aberta!";
+    } 
   }
 
   // Recarregar o quiz
