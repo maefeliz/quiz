@@ -2,110 +2,266 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8" />
-<title>Quiz Interativo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quiz: Melhore seu Jogo de Free Fire com o Botão Vermelho</title>
+<!-- Link para animações e estilos -->
 <style>
-  body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-  h2 { color: #333; }
-  .question { margin-bottom: 20px; }
-  .options { list-style: none; padding: 0; }
-  .options li { margin: 5px 0; }
-  button { padding: 10px 20px; font-size: 16px; }
-  #result { margin-top: 20px; font-weight: bold; }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff4e50, #f9d423);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  h1 {
+    text-align: center;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-family: 'Impact', cursive;
+  }
+
+  .question {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    min-height: 60px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  button.option {
+    padding: 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #e74c3c;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  button.option:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+  }
+
+  /* Animações de transição */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* Seção de resultado */
+  .result-section {
+    display: none;
+    text-align: center;
+  }
+
+  /* Botões finais */
+  .final-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn-comprar {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  .btn-comprar:hover {
+    background-color: #c0392b;
+  }
+
+  .btn-info {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  .btn-info:hover {
+    background-color: #2980b9;
+  }
+
+  /* Solução do problema */
+  .solucao {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #2ecc71;
+  }
+
+  /* Animação do botão de compra */
+  .animate-bounce {
+    animation: bounce 1s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+  }
 </style>
 </head>
 <body>
 
-<h2>Quiz Interativo: Conhecimentos Gerais</h2>
+<div class="container" id="quiz-container">
+  <h1 class="fade-in">Descubra Como Melhorar Seu Jogo de Free Fire!</h1>
+  
+  <div class="question fade-in" id="question">Vamos começar! Você costuma acertar tiros na cabeça?</div>
+  
+  <div class="options" id="options">
+    <button class="option" data-answer="sim">Sim, sempre que posso!</button>
+    <button class="option" data-answer="não">Não, tenho dificuldades.</button>
+    <button class="option" data-answer="às vezes">Às vezes, depende da situação.</button>
+  </div>
+</div>
 
-<div id="quiz-container"></div>
+<!-- Seção de resultado, inicialmente escondida -->
+<div class="container result-section" id="result-section">
+  <h2 class="fade-in" id="result-title"></h2>
+  
+  <div class="solucao" id="solucao"></div>
+  
+  <div class="final-buttons" id="final-buttons">
+    <a href="https://go.pepperpay.com.br/mbm6k" target="_blank" class="btn btn-comprar animate-bounce" id="comprar-btn">Comprar o Botão Vermelho</a>
+    <button class="btn btn-info" id="refazer">Refazer o Quiz</button>
+  </div>
+</div>
 
-<button id="nextBtn" onclick="nextQuestion()">Próxima Pergunta</button>
-<div id="result"></div>
-
+<!-- JavaScript para funcionalidades -->
 <script>
-const questions = [
-  {
-    question: "Qual é a capital da França?",
-    options: ["Madrid", "Paris", "Roma", "Berlim"],
-    answer: 1
-  },
-  {
-    question: "Qual é o maior planeta do sistema solar?",
-    options: ["Terra", "Marte", "Júpiter", "Saturno"],
-    answer: 2
-  },
-  {
-    question: "Quem escreveu 'Dom Quixote'?",
-    options: ["William Shakespeare", "Miguel de Cervantes", "Dante Alighieri", "Gabriel García Márquez"],
-    answer: 1
+  const questions = [
+    {
+      question: "Você costuma acertar tiros na cabeça?",
+      options: [
+        { text: "Sim, sempre que posso!", answer: "sim" },
+        { text: "Não, tenho dificuldades.", answer: "não" },
+        { text: "Às vezes, depende da situação.", answer: "às vezes" }
+      ]
+    },
+    {
+      question: "Você usa mira ou preferencia tiros livres?",
+      options: [
+        { text: "Uso mira, é mais preciso.", answer: "mira" },
+        { text: "Prefiro tiros livres.", answer: "livre" },
+        { text: "Uso ambos, dependendo da situação.", answer: "ambos" }
+      ]
+    },
+    {
+      question: "Você já tentou melhorar seu desempenho com acessórios ou treinos?",
+      options: [
+        { text: "Sim, várias vezes.", answer: "sim" },
+        { text: "Não, não sei por onde começar.", answer: "não" },
+        { text: "Já tentei, mas sem sucesso.", answer: "tentativas" }
+      ]
+    }
+  ];
+
+  let currentQuestionIndex = 0;
+  let responses = [];
+
+  const questionDiv = document.getElementById('question');
+  const optionsDiv = document.getElementById('options');
+  const resultSection = document.getElementById('result-section');
+  const resultTitle = document.getElementById('result-title');
+  const solucaoDiv = document.getElementById('solucao');
+  const finalButtonsDiv = document.getElementById('final-buttons');
+  const refazerBtn = document.getElementById('refazer');
+
+  function showQuestion() {
+    const q = questions[currentQuestionIndex];
+    questionDiv.innerText = q.question;
+    optionsDiv.innerHTML = '';
+
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.innerText = opt.text;
+      btn.setAttribute('data-answer', opt.answer);
+      btn.onclick = handleAnswer;
+      optionsDiv.appendChild(btn);
+    });
   }
-];
 
-let currentQuestionIndex = 0;
-let score = 0;
+  function handleAnswer(e) {
+    const answer = e.target.getAttribute('data-answer');
+    responses.push(answer);
+    currentQuestionIndex++;
 
-function loadQuestion() {
-  const q = questions[currentQuestionIndex];
-  const container = document.getElementById('quiz-container');
-  container.innerHTML = '';
-
-  const questionElem = document.createElement('div');
-  questionElem.className = 'question';
-  questionElem.innerText = q.question;
-  container.appendChild(questionElem);
-
-  const optionsList = document.createElement('ul');
-  optionsList.className = 'options';
-
-  q.options.forEach((option, index) => {
-    const li = document.createElement('li');
-    const radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = 'option';
-    radio.value = index;
-    li.appendChild(radio);
-    li.appendChild(document.createTextNode(' ' + option));
-    optionsList.appendChild(li);
-  });
-
-  container.appendChild(optionsList);
-}
-
-function nextQuestion() {
-  const options = document.getElementsByName('option');
-  let selected = -1;
-  for (let i = 0; i < options.length; i++) {
-    if (options[i].checked) {
-      selected = parseInt(options[i].value);
-      break;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
     }
   }
 
-  if (selected === -1) {
-    alert('Por favor, selecione uma resposta.');
-    return;
+  function showResult() {
+    document.getElementById('quiz-container').style.display = 'none';
+    resultSection.style.display = 'block';
+
+    // Análise simples das respostas para criar o resultado
+    const totalYes = responses.filter(r => r === 'sim').length;
+    const totalNo = responses.filter(r => r === 'não').length;
+    const totalSometimes = responses.filter(r => r === 'às vezes').length;
+
+    if (totalYes >= 2) {
+      resultTitle.innerText = "Você já tem potencial, só precisa de um empurrão!";
+      solucaoDiv.innerHTML = "Que tal usar o <strong>Botão Vermelho</strong> para acertar mais tiros na cabeça rapidamente, sem precisar usar mira? Assim, você domina o jogo!";
+    } else if (totalNo >= 2) {
+      resultTitle.innerText = "Vamos melhorar seu desempenho!";
+      solucaoDiv.innerHTML = "O <strong>Botão Vermelho</strong> ajuda você a dar mais tiros na cabeça sem precisar de mira, facilitando suas jogadas e deixando seus inimigos sem chance!";
+    } else {
+      resultTitle.innerText = "Você está no caminho certo!";
+      solucaoDiv.innerHTML = "Com o <strong>Botão Vermelho</strong>, suas chances de acertar tiros na cabeça aumentam ainda mais, deixando seus inimigos de cabelo em pé!";
+    }
   }
 
-  if (selected === questions[currentQuestionIndex].answer) {
-    score++;
-  }
+  // Recarregar o quiz
+  refazerBtn.onclick = () => {
+    responses = [];
+    currentQuestionIndex = 0;
+    document.getElementById('quiz-container').style.display = 'block';
+    resultSection.style.display = 'none';
+    showQuestion();
+  };
 
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    loadQuestion();
-  } else {
-    showResult();
-  }
-}
+  // Inicializar
+  showQuestion();
 
-function showResult() {
-  document.getElementById('quiz-container').innerHTML = '';
-  document.getElementById('nextBtn').style.display = 'none';
-  document.getElementById('result').innerText = `Você acertou ${score} de ${questions.length} perguntas.`;
-}
-
-// Inicializa o quiz
-loadQuestion();
+  // Adicionar animação ao botão comprar
+  const comprarBtn = document.getElementById('comprar-btn');
+  comprarBtn.classList.add('animate-bounce');
 </script>
 
 </body>
